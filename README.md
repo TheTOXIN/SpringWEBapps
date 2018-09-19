@@ -1,33 +1,12 @@
-# EXAMPLES_WEB_APPS
+# Spring WEB apps
 
-Web apps on the different Java technologies
+Web apps on the different Spring technologies
 
 ##### List of apps:
 
-
-- **APP_CRUD**
-
-Just web-app with CREATE, READ, UPDATE, DELETE operation.
-
-Used Spring, Hibernate, MySQL   
-- **DATE_BASE**
-
-Example work of JDBC
-- **HAND_WEB_APP**
-
-JavaEE application build with community IDEA
-- **IDEA_WEB_APP**
-
-JavaEE application with JSP and Servelts
-- **POOR_WEV_APP**
-
-JavaEE application build without IDE
-- **SIMPLE_HTTP_SERVER**
-
-Example simple HTTP server, worked on sockets
 - **SPRING_ANGULAR**
 
-Apps on SpringBOOT && Angular-JS
+Apps on SpringBOOT && Angular2
 - **SPRING_BOOT**
 
 Starting init web on SpringBoot
@@ -40,4 +19,31 @@ Example of how to use Spring REST and JPA
 - **SPRING_SECURITY**
 
 Spring application with authorization and roles of usersa
+- **SPRING_CLOUD**
+
+Spring cloud example
+- **SPRING_FLUX_REACTIVE**
+
+Reactive java app on spring web flux
+- **SPRING_GRAPHQL**
+
+Web service with api on GraohQL
+- **SPRING_HATEOAS**
+
+REST + HATEOAS
+- **SPRING_KOTLIN**
+
+Exmaple REST on Kotlin & Spring
+- **SPRING_MONGODB**
+
+Spring boot and NoSQL db
+- **SPRING_REACT**
+
+Apps on SpringBOOT && React
+- **SPRING_VAADIN**
+
+Spring MVC wite, view framework Vaadin
+- **SPRING_TELEGRAM**
+
+Spring with Tlelegram API bot
 
