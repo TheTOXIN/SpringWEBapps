@@ -1,6 +1,6 @@
 # Spring WEB apps
 
-Web apps on the different Spring technologies
+Web apps on the different Spring technologies...
 
 ##### List of apps:
 
