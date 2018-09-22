@@ -2,12 +2,9 @@ package com.toxin.vaadinpring;
 
 import com.toxin.vaadinpring.entity.Item;
 import com.toxin.vaadinpring.repository.ItemRepository;
-import com.toxin.vaadinpring.view.ItemView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterListener;
 import com.vaadin.flow.router.Route;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -58,7 +55,7 @@ public class VaadinpringApplication {
                 itemRepository.save(item);
             });
 
-            itemRepository.findAll().forEach(System.out::print);
+            itemRepository.findAll().forEach(System.out::println);
         };
     }
 

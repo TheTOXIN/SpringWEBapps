@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+    Item findByTitleStartsWithIgnoreCase(String title);
+
 }

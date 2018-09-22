@@ -22,7 +22,11 @@ public class ItemService {
     }
 
     public Item find(Long id) {
-        return itemRepository.findById(id).orElse(null);
+        return itemRepository.findById(id).get();
+    }
+
+    public Item findByFilter(String value) {
+        return itemRepository.findByTitleStartsWithIgnoreCase(value);
     }
 
     public void save(Item item) {
@@ -31,6 +35,24 @@ public class ItemService {
 
     public void delete(Long id) {
         itemRepository.deleteById(id);
+    }
+
+    public int countPrice() {
+        return itemRepository.findAll()
+            .stream()
+            .mapToInt(Item::getPrice)
+            .sum();
+    }
+
+    public Item getMock() {
+        Item mock = new Item();
+
+        mock.setDescription("");
+        mock.setTitle("");
+        mock.setPrice(0);
+        mock.setBuy(false);
+
+        return mock;
     }
 
 }
