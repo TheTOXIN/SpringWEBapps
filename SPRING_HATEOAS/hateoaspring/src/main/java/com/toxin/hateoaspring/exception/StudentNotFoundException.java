@@ -2,8 +2,8 @@ package com.toxin.hateoaspring.exception;
 
 public class StudentNotFoundException extends RuntimeException {
 
-    public StudentNotFoundException(String message) {
-        super(message);
+    public StudentNotFoundException(Long id) {
+        super("NOT FOUND by id " + id);
     }
 
 }

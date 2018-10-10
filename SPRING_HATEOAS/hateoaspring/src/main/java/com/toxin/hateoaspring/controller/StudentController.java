@@ -1,9 +1,9 @@
 package com.toxin.hateoaspring.controller;
 
-import com.toxin.hateoaspring.exception.StudentNotFoundException;
 import com.toxin.hateoaspring.repository.StudentRepository;
 import com.toxin.hateoaspring.resource.StudentResource;
 import com.toxin.hateoaspring.entity.Student;
+import com.toxin.hateoaspring.serivce.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -11,37 +11,39 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
+
 
 @RestController
 public class StudentController {
 
     private final StudentRepository studentRepository;
-
     private final StudentResource studentResource;
+    private final StudentService studentService;
 
     @Autowired
     public StudentController(
         StudentRepository studentRepository,
-        StudentResource studentResource
+        StudentResource studentResource,
+        StudentService studentService
     ) {
         this.studentRepository = studentRepository;
         this.studentResource = studentResource;
+        this.studentService = studentService;
     }
 
     @GetMapping("/students")
     public Resources<Student> retrieveAllStudents() {
-        return studentResource.retrieveAllStudents(studentRepository.findAll());
+        List<Student> students = studentRepository.findAll();
+
+        return studentResource.retrieveAllStudents(students);
     }
 
     @GetMapping("/students/{id}")
     public Resource<Student> retrieveStudent(@PathVariable long id) {
-        Optional<Student> student = studentRepository.findById(id);
+        Student student = studentService.findById(id);
 
-        if (!student.isPresent())
-            throw new StudentNotFoundException("NOT FOUND by studentId-" + id);
-
-        return studentResource.retrieveStudent(student.get());
+        return studentResource.retrieveStudent(student);
     }
 
     @DeleteMapping("/students/{id}")
@@ -60,16 +62,20 @@ public class StudentController {
 
     @PutMapping("/students/{id}")
     public Resource<Student> updateStudent(@RequestBody Student student, @PathVariable long id) {
-        Optional<Student> studentOptional = studentRepository.findById(id);
-
-        if (!studentOptional.isPresent())
-            throw new StudentNotFoundException("NOT FOUND by studentId-" + id);
+        studentService.findById(id);
 
         student.setStudentId(id);
 
         studentRepository.save(student);
 
         return studentResource.actionStudent(student);
+    }
+
+    @GetMapping("/students/{id}/generate-subjects")
+    public Resource<Long> generateSubjects(@PathVariable long id) {
+        studentService.generateSubjects(id);
+
+        return studentResource.generateSubjects(id);
     }
 
 }

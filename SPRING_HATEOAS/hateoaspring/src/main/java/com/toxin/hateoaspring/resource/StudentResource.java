@@ -1,6 +1,7 @@
 package com.toxin.hateoaspring.resource;
 
 import com.toxin.hateoaspring.controller.StudentController;
+import com.toxin.hateoaspring.controller.SubjectController;
 import com.toxin.hateoaspring.entity.Student;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
@@ -26,7 +27,10 @@ public class StudentResource {
             ).withRel("all-student"),
             linkTo(
                 methodOn(clazz).deleteStudent(student.getStudentId())
-            ).withRel("delete-student")
+            ).withRel("delete-student"),
+            linkTo(
+                methodOn(SubjectController.class).readByUser(student.getStudentId())
+            ).withRel("subjects-student")
         );
 
         return resource;
@@ -46,8 +50,14 @@ public class StudentResource {
         Resource<Student> resource = new Resource<>(student);
 
         resource.add(linkTo(methodOn(clazz).retrieveStudent(student.getStudentId())).withSelfRel());
+        resource.add(linkTo(methodOn(clazz).generateSubjects(student.getStudentId())).withRel("generate-subject"));
 
         return resource;
     }
 
+    public Resource<Long> generateSubjects(long id) {
+        Link link = linkTo(methodOn(SubjectController.class).readByUser(id)).withRel("subjects");
+
+        return new Resource<>(id, link);
+    }
 }
