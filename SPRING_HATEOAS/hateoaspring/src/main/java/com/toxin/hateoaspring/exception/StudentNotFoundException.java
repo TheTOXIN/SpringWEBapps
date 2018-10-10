@@ -1,4 +1,4 @@
-package com.toxin.hateoaspring;
+package com.toxin.hateoaspring.exception;
 
 public class StudentNotFoundException extends RuntimeException {
 
