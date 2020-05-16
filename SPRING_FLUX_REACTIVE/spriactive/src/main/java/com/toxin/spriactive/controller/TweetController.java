@@ -81,12 +81,12 @@ public class TweetController {
             .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping(value = "/stream/tweets", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/stream/tweets", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Tweet> streamAllTweets() {
         return tweetService.streamAllTweets();
     }
 
-    @GetMapping(value = "/stream/tweets/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/stream/tweets/{id}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Mono<Tweet> streamTweet(
         @PathVariable(value = "id") String tweetId
     ) {
@@ -94,16 +94,9 @@ public class TweetController {
     }
 
     @GetMapping(value = "/testSSE/{hi}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<String>> testSSE(
+    public Flux<String> testSSE(
         @PathVariable(value = "hi") String hi
     ) {
-        return Flux.interval(Duration.ofSeconds(1))
-            .map(sq -> ServerSentEvent.<String>builder()
-                .id(String.valueOf(sq))
-                .event("periodic-event")
-                .data(hi)
-                .build()
-            );
+        return Flux.interval(Duration.ofSeconds(1)).map(i -> hi + i);
     }
-
 }
