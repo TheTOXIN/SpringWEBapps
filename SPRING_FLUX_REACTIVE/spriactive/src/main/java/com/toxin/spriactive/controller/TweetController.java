@@ -2,6 +2,7 @@ package com.toxin.spriactive.controller;
 
 import com.toxin.spriactive.service.TweetService;
 import com.toxin.spriactive.entity.Tweet;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -22,14 +23,10 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @RestController
+@RequiredArgsConstructor
 public class TweetController {
 
     private final TweetService tweetService;
-
-    @Autowired
-    public TweetController(TweetService tweetService) {
-        this.tweetService = tweetService;
-    }
 
     @Bean
     RouterFunction<ServerResponse> getAllTweets() {
@@ -83,7 +80,7 @@ public class TweetController {
 
     @GetMapping(value = "/stream/tweets", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Tweet> streamAllTweets() {
-        return tweetService.streamAllTweets();
+        return tweetService.streamAllTweets().delayElements(Duration.ofSeconds(3));
     }
 
     @GetMapping(value = "/stream/tweets/{id}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)

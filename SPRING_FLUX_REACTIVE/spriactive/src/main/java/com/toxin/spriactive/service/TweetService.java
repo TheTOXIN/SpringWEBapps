@@ -2,23 +2,20 @@ package com.toxin.spriactive.service;
 
 import com.toxin.spriactive.entity.Tweet;
 import com.toxin.spriactive.repository.TweetRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+
 
 @Service
+@RequiredArgsConstructor
 public class TweetService {
 
     private final TweetRepository tweetRepository;
-
-    @Autowired
-    public TweetService(
-        TweetRepository tweetRepository
-    ) {
-        this.tweetRepository = tweetRepository;
-    }
 
     public Flux<Tweet> getAllTweets() {
         return tweetRepository.findAll();
@@ -45,7 +42,9 @@ public class TweetService {
     }
 
     public Flux<Tweet> streamAllTweets() {
-        return tweetRepository.findAll();
+        return tweetRepository.findAllByCreatedAtAfter(
+            LocalDateTime.now()
+        );
     }
 
     public Mono<Tweet> streamTweet(String tweetId) {
